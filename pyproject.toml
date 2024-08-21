@@ -44,5 +44,10 @@ extend-select = [
     'T20',  # flake8-print
     'C4',   # flake8-comprehensions
     'PERF', # performance
-    'PT',
+    'PT',   # pytest
+]
+
+[tool.ruff.extend-per-file-ignores]
+"src/**" = [
+    "PT", # ignore pytest lints in source files
 ]
