@@ -1,10 +1,13 @@
-from __future__ import unicode_literals
-from __future__ import division
-
+from collections.abc import Sequence
 from math import ceil, log
+from typing import Callable
 
 
-def method(algorithm, alphabet, size):
+def method(
+    algorithm: Callable[[int], Sequence[int]],
+    alphabet: str,
+    size: int,
+) -> str:
     alphabet_len = len(alphabet)
 
     mask = 1
@@ -12,7 +15,7 @@ def method(algorithm, alphabet, size):
         mask = (2 << int(log(alphabet_len - 1) / log(2))) - 1
     step = int(ceil(1.6 * mask * size / alphabet_len))
 
-    id = ''
+    id = ""
     while True:
         random_bytes = algorithm(step)
 
