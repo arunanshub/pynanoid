@@ -6,9 +6,9 @@ from libc.math cimport log, ceil
 from libcpp.vector cimport vector
 
 
-cdef unsigned char[:] algorithm_generate(int size):
+cdef const unsigned char[:] algorithm_generate(int size):
     """Generate random bytes of given size."""
-    return bytearray(urandom(size))
+    return urandom(size)
 
 
 @cython.wraparound(False)
@@ -24,10 +24,11 @@ cpdef str method(str alphabet, size_t size):
     cdef int step = <int>ceil(1.6 * mask * size / alphabet_len)
 
     cdef:
-        unsigned char[:] random_bytes
+        const unsigned char[:] random_bytes
         size_t i
         unsigned int random_byte
         vector[unsigned char] result
+        bint is_done = False
 
     result.reserve(size)
 
@@ -37,19 +38,15 @@ cpdef str method(str alphabet, size_t size):
         with nogil:
             for i in range(<size_t>step):
                 random_byte = random_bytes[i] & mask
-                if random_byte > alphabet_len:
+                if random_byte >= alphabet_len:
                     continue
                 if not alphabet_encoded[random_byte]:
                     continue
                 result.push_back(alphabet_encoded[random_byte])
 
                 if result.size() == size:
+                    is_done = True
                     break
 
-            # if random_byte < alphabet_len:
-            #     if alphabet_encoded[random_byte]:
-            #         result.push_back(alphabet_encoded[random_byte])
-            #         if result.size() == size:
-            #             break
-
-        return result.data().decode("utf-8")
+        if is_done:
+            return result.const_data()[:size].decode("utf-8")
