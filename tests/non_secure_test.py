@@ -47,5 +47,5 @@ def test_has_no_collisions():
     used = {}
     for _ in range(count):
         id = non_secure_generate()
-        assert id in used is not None
+        assert id not in used
         used[id] = True
