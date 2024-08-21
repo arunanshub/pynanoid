@@ -1,13 +1,9 @@
-from collections.abc import Sequence
 from math import ceil, log
-from typing import Callable
+
+from .algorithm import algorithm_generate
 
 
-def method(
-    algorithm: Callable[[int], Sequence[int]],
-    alphabet: str,
-    size: int,
-) -> str:
+def method(alphabet: str, size: int) -> str:
     alphabet_len = len(alphabet)
 
     mask = 1
@@ -17,7 +13,7 @@ def method(
 
     id = ""
     while True:
-        random_bytes = algorithm(step)
+        random_bytes = algorithm_generate(step)
 
         for i in range(step):
             random_byte = random_bytes[i] & mask
@@ -27,3 +23,12 @@ def method(
 
                     if len(id) == size:
                         return id
+
+
+try:
+    # try to load the optimized cython version
+    from ._method import (  # type: ignore[import-untyped,no-redef]
+        method,  # noqa: F401
+    )
+except ImportError:
+    pass

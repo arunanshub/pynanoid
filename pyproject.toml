@@ -1,5 +1,5 @@
 [build-system]
-requires = ["pdm-backend"]
+requires = ["pdm-backend", "Cython>=3.0", "setuptools"]
 build-backend = "pdm.backend"
 
 [project]
@@ -19,16 +19,17 @@ repository = "https://github.com/puyuan/py-nanoid"
 [tool.pdm]
 distribution = true
 
+[tool.pdm.build]
+run-setuptools = true
+
 [tool.pdm.dev-dependencies]
 dev = [
     "ruff>=0.6.1",
     "mypy>=1.11.1",
+    "cython>=3.0.11",
+    "cibuildwheel>=2.20.0",
 ]
-test = [
-    "pytest>=8.3.2",
-    "pytest-cov>=5.0.0",
-    "pytest-xdist>=3.6.1",
-]
+test = ["pytest>=8.3.2", "pytest-cov>=5.0.0", "pytest-xdist>=3.6.1"]
 
 [tool.ruff]
 line-length = 80
@@ -49,7 +50,7 @@ extend-select = [
     'PT',   # pytest
 ]
 
-[tool.ruff.extend-per-file-ignores]
+[tool.ruff.lint.extend-per-file-ignores]
 "src/**" = [
     "PT", # ignore pytest lints in source files
 ]
