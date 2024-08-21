@@ -1,0 +1,48 @@
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[project]
+name = "nanoid"
+version = "2.0.0"
+description = "A tiny, secure, URL-friendly, unique string ID generator for Python"
+authors = [{ name = "Paul Yuan", email = "puyuan1@gmail.com" }]
+dependencies = []
+requires-python = ">=3.9"
+readme = "README.md"
+license = { text = "MIT" }
+
+[project.urls]
+repository = "https://github.com/puyuan/py-nanoid"
+"Bug Tracker" = "https://github.com/puyuan/py-nanoid/issues"
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest>=8.3.2",
+    "pytest-cov>=5.0.0",
+    "pytest-xdist>=3.6.1",
+    "ruff>=0.6.1",
+    "mypy>=1.11.1",
+]
+
+[tool.ruff]
+line-length = 80
+target-version = "py39"
+
+[tool.ruff.lint]
+extend-select = [
+    'F',    # Pyflakes
+    'E',    # pycodestyle (Error)
+    'I',    # isort
+    'UP',   # pyupgrade
+    'YTT',  # flake8-2020
+    'B',    # flake8-bugbear
+    'T10',  # flake8-debugger
+    'T20',  # flake8-print
+    'C4',   # flake8-comprehensions
+    'PERF', # performance
+    'PT',
+]
