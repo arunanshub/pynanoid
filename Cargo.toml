@@ -1,0 +1,29 @@
+[package]
+name = "nanoid"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+getrandom = "0.2.15"
+pyo3 = { version = "0.22.2", features = ["abi3-py39"] }
+thiserror = "1.0.63"
+
+[dev-dependencies]
+divan = "0.1.14"
+proptest = "1.5.0"
+
+[lib]
+# name = "nanoid"
+path = "rust/lib.rs"
+# "cdylib" is necessary to produce a shared library for Python to import from.
+# "rlib" is necessary to execute the benches.
+crate-type = ["cdylib", "rlib"]
+
+[profile.release]
+codegen-units = 1
+lto = true
+strip = true
+
+[[bench]]
+name = "basic"
+harness = false

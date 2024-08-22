@@ -143,3 +143,6 @@ temp.py
 type_info.json
 .pdm-build/
 src/pdm/models/VERSION
+
+# Added by cargo
+/target

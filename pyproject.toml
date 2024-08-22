@@ -1,6 +1,6 @@
 [build-system]
-requires = ["pdm-backend", "Cython>=3.0", "setuptools"]
-build-backend = "pdm.backend"
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
 
 [project]
 name = "nanoid"
@@ -17,11 +17,13 @@ repository = "https://github.com/puyuan/py-nanoid"
 "Bug Tracker" = "https://github.com/puyuan/py-nanoid/issues"
 
 [tool.pdm]
-distribution = true
+# distribution = true
 
-[tool.pdm.build]
-run-setuptools = true
-excludes = ["**/_*.c", "**/_*.cpp", "**/*.so"]
+[tool.maturin]
+features = ["pyo3/extension-module"]
+module-name = "nanoid._method"
+python-source = "src"
+strip = true
 
 [tool.pdm.dev-dependencies]
 dev = [
@@ -29,6 +31,7 @@ dev = [
     "mypy>=1.11.1",
     "cython>=3.0.11",
     "cibuildwheel>=2.20.0",
+    "pip>=24.2",
 ]
 test = [
     "pytest>=8.3.2",
@@ -60,3 +63,7 @@ extend-select = [
 "src/**" = [
     "PT", # ignore pytest lints in source files
 ]
+
+[tool.cibuildwheel]
+before-all = "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"
+environment = { PATH="$PATH:$HOME/.cargo/bin" }
