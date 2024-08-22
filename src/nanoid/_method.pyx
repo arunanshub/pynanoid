@@ -13,7 +13,11 @@ cdef const unsigned char[:] algorithm_generate(int size):
 
 @cython.wraparound(False)
 @cython.boundscheck(False)
+@cython.cdivision(True)
 cpdef str method(str alphabet, size_t size):
+    if not len(alphabet):
+        raise ValueError("alphabet cannot be an empty string")
+
     cdef:
         const unsigned char[:] alphabet_encoded = alphabet.encode('utf-8')
         unsigned int alphabet_len = len(alphabet_encoded)
@@ -35,18 +39,17 @@ cpdef str method(str alphabet, size_t size):
     while True:
         random_bytes = algorithm_generate(step)
 
-        with nogil:
-            for i in range(<size_t>step):
-                random_byte = random_bytes[i] & mask
-                if random_byte >= alphabet_len:
-                    continue
-                if not alphabet_encoded[random_byte]:
-                    continue
-                result.push_back(alphabet_encoded[random_byte])
+        for i in range(<size_t>step):
+            random_byte = random_bytes[i] & mask
+            if random_byte >= alphabet_len:
+                continue
+            if not alphabet_encoded[random_byte]:
+                continue
+            result.push_back(alphabet_encoded[random_byte])
 
-                if result.size() == size:
-                    is_done = True
-                    break
+            if result.size() == size:
+                is_done = True
+                break
 
         if is_done:
-            return result.const_data()[:size].decode("utf-8")
+            return (&result[0])[:size].decode("utf-8")
