@@ -17,7 +17,7 @@ repository = "https://github.com/puyuan/py-nanoid"
 "Bug Tracker" = "https://github.com/puyuan/py-nanoid/issues"
 
 [tool.pdm]
-# distribution = true
+distribution = true
 
 [tool.maturin]
 features = ["pyo3/extension-module"]

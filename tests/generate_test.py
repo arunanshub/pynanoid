@@ -1,5 +1,8 @@
 from sys import maxsize
 
+from hypothesis import given
+from hypothesis import strategies as st
+
 from nanoid import generate
 
 
@@ -44,3 +47,8 @@ def test_has_options():
     for _ in range(count):
         assert generate("a", 5) == "aaaaa"
         assert len(generate(alphabet="12345a", size=3)) == 3
+
+
+@given(st.text(min_size=1), st.integers(min_value=1, max_value=5000))
+def test_same_size(alphabet: str, size: int):
+    assert len(generate(alphabet, size)) == size

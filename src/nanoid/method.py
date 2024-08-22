@@ -10,6 +10,11 @@ def method(
     *,
     algorithm: Callable[[int], bytes] = algorithm_generate,
 ) -> str:
+    if alphabet == "":  # pragma: no cover
+        raise ValueError("Alphabet cannot be empty")
+    if size < 1:  # pragma: no cover
+        raise ValueError("Size cannot be less than 1")
+
     alphabet_len = len(alphabet)
 
     mask = 1
@@ -24,8 +29,7 @@ def method(
         for i in range(step):
             random_byte = random_bytes[i] & mask
             if random_byte < alphabet_len:
-                if alphabet[random_byte]:
-                    id += alphabet[random_byte]
+                id += alphabet[random_byte]
 
-                    if len(id) == size:
-                        return id
+                if len(id) == size:
+                    return id

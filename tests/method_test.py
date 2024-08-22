@@ -1,3 +1,6 @@
+from hypothesis import given
+from hypothesis import strategies as st
+
 from nanoid.method import method
 from nanoid.resources import SIZE
 
@@ -12,3 +15,8 @@ def test_generates_random_string():
         return random_bytes
 
     assert method("abcde", 4, algorithm=rand) == "cdac"  # type: ignore
+
+
+@given(st.text(min_size=1), st.integers(min_value=1, max_value=5000))
+def test_same_size(alphabet: str, size: int):
+    assert len(method(alphabet, size)) == size
