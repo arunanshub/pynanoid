@@ -17,6 +17,8 @@ cdef const unsigned char[:] algorithm_generate(int size):
 cpdef str method(str alphabet, size_t size):
     if not len(alphabet):
         raise ValueError("alphabet cannot be an empty string")
+    if not size:
+        raise ValueError("size must be greater than zero")
 
     cdef:
         const unsigned char[:] alphabet_encoded = alphabet.encode('utf-8')
@@ -52,4 +54,4 @@ cpdef str method(str alphabet, size_t size):
                 break
 
         if is_done:
-            return (&result[0])[:size].decode("utf-8")
+            return (&result[0]).decode("utf-8")[:size]

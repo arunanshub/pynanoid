@@ -1,4 +1,8 @@
-from .method import method
+try:
+    # try to load the optimized cython version
+    from ._method import method  # type: ignore[import-untyped]
+except ImportError:
+    from .method import method
 from .resources import ALPHABET, SIZE
 
 

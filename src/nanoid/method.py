@@ -1,9 +1,15 @@
 from math import ceil, log
+from typing import Callable
 
 from .algorithm import algorithm_generate
 
 
-def method(alphabet: str, size: int) -> str:
+def method(
+    alphabet: str,
+    size: int,
+    *,
+    algorithm: Callable[[int], bytes] = algorithm_generate,
+) -> str:
     alphabet_len = len(alphabet)
 
     mask = 1
@@ -13,7 +19,7 @@ def method(alphabet: str, size: int) -> str:
 
     id = ""
     while True:
-        random_bytes = algorithm_generate(step)
+        random_bytes = algorithm(step)
 
         for i in range(step):
             random_byte = random_bytes[i] & mask
@@ -23,12 +29,3 @@ def method(alphabet: str, size: int) -> str:
 
                     if len(id) == size:
                         return id
-
-
-try:
-    # try to load the optimized cython version
-    from ._method import (  # type: ignore[import-untyped,no-redef]
-        method,  # noqa: F401
-    )
-except ImportError:
-    pass

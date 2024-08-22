@@ -11,4 +11,4 @@ def test_generates_random_string():
             random_bytes += sequence[0 : size - i]
         return random_bytes
 
-    assert method(rand, "abcde", 4) == "cdac"
+    assert method("abcde", 4, algorithm=rand) == "cdac"  # type: ignore
