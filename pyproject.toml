@@ -30,7 +30,6 @@ dev = [
     "ruff>=0.6.1",
     "mypy>=1.11.1",
     "cython>=3.0.11",
-    "cibuildwheel>=2.20.0",
     "pip>=24.2",
 ]
 test = [
@@ -38,6 +37,7 @@ test = [
     "pytest-cov>=5.0.0",
     "pytest-xdist>=3.6.1",
     "hypothesis>=6.111.1",
+    "pytest-sugar>=1.0.0",
 ]
 
 [tool.ruff]
