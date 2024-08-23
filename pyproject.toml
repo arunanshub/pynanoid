@@ -9,12 +9,12 @@ description = "A tiny, secure, URL-friendly, unique string ID generator for Pyth
 authors = [{ name = "Arunanshu Biswas", email = "mydellpc07@gmail.com" }]
 dependencies = []
 requires-python = ">=3.9"
-readme = "README.rst"
+readme = "README.md"
 license = { file = "LICENSE" }
 
 [project.urls]
-repository = "https://github.com/puyuan/py-nanoid"
-"Bug Tracker" = "https://github.com/puyuan/py-nanoid/issues"
+repository = "https://github.com/arunanshub/pynanoid"
+"Bug Tracker" = "https://github.com/arunanshub/pynanoid/issues"
 
 [tool.pdm]
 distribution = true
