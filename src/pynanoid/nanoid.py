@@ -5,7 +5,7 @@ This is provided in case the compiled version is not available.
 
 from math import ceil, log
 from os import urandom
-from random import random
+from random import random as _random
 from typing import Callable
 
 from .constants import ALPHABET, SIZE
@@ -49,7 +49,7 @@ def non_secure_generate(alphabet: str = ALPHABET, size: int = SIZE) -> str:
 
     id_ = ""
     for _ in range(size):
-        id_ += alphabet[int(random() * alphabet_len) | 0]  # noqa: S311
+        id_ += alphabet[int(_random() * alphabet_len) | 0]  # noqa: S311
     return id_
 
 

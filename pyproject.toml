@@ -9,8 +9,8 @@ description = "A tiny, secure, URL-friendly, unique string ID generator for Pyth
 authors = [{ name = "Arunanshu Biswas", email = "mydellpc07@gmail.com" }]
 dependencies = []
 requires-python = ">=3.9"
-readme = "README.md"
-license = { text = "MIT" }
+readme = "README.rst"
+license = { file = "LICENSE" }
 
 [project.urls]
 repository = "https://github.com/puyuan/py-nanoid"
@@ -34,6 +34,11 @@ test = [
     "hypothesis>=6.111.1",
     "pytest-sugar>=1.0.0",
     "pytest-benchmark[histogram]>=4.0.0",
+]
+docs = [
+    "furo>=2024.8.6",
+    "sphinxext-opengraph>=0.9.1",
+    "sphinx-copybutton>=0.5.2",
 ]
 
 [tool.ruff]
