@@ -13,33 +13,31 @@ def test_has_flat_distribution():
 
     chars = {}
     for _ in range(count):
-        id = generate(alphabet, length)
-        for j in range(len(id)):
-            char = id[j]
+        id_ = generate(alphabet, length)
+        for j in range(len(id_)):
+            char = id_[j]
             if not chars.get(char):
                 chars[char] = 0
             chars[char] += 1
 
     assert len(chars.keys()) == len(alphabet)
 
-    max = 0
-    min = maxsize
+    max_ = 0
+    min_ = maxsize
     for k in chars:
         distribution = (chars[k] * len(alphabet)) / float(count * length)
-        if distribution > max:
-            max = distribution
-        if distribution < min:
-            min = distribution
-    assert max - min <= 0.05
+        min_ = min(distribution, min_)
+        max_ = max(distribution, max_)
+    assert max_ - min_ <= 0.05
 
 
 def test_has_no_collisions():
     count = 100 * 1000
     used = {}
     for _ in range(count):
-        id = generate()
-        assert id not in used
-        used[id] = True
+        id_ = generate()
+        assert id_ not in used
+        used[id_] = True
 
 
 def test_has_options():

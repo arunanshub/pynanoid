@@ -22,14 +22,14 @@ def method(
         mask = (2 << int(log(alphabet_len - 1) / log(2))) - 1
     step = int(ceil(1.6 * mask * size / alphabet_len))
 
-    id = ""
+    id_ = ""
     while True:
         random_bytes = algorithm(step)
 
         for i in range(step):
             random_byte = random_bytes[i] & mask
             if random_byte < alphabet_len:
-                id += alphabet[random_byte]
+                id_ += alphabet[random_byte]
 
-                if len(id) == size:
-                    return id
+                if len(id_) == size:
+                    return id_
