@@ -1,9 +1,9 @@
 import pytest
 from pytest_benchmark.fixture import BenchmarkFixture
 
-from nanoid._method import method as rust_method
-from nanoid.method import method as python_method
-from nanoid.resources import ALPHABET, SIZE
+from pynanoid._method import method as rust_method
+from pynanoid.method import method as python_method
+from pynanoid.resources import ALPHABET, SIZE
 
 
 @pytest.mark.parametrize("size", [SIZE])

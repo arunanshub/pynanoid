@@ -21,7 +21,7 @@ distribution = true
 
 [tool.maturin]
 features = ["pyo3/extension-module"]
-module-name = "nanoid._method"
+module-name = "pynanoid._method"
 python-source = "src"
 strip = true
 

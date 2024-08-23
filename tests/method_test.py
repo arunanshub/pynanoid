@@ -1,8 +1,8 @@
 from hypothesis import given
 from hypothesis import strategies as st
 
-from nanoid.method import method
-from nanoid.resources import SIZE
+from pynanoid.method import method
+from pynanoid.resources import SIZE
 
 
 def test_generates_random_string():

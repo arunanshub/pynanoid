@@ -1,14 +1,14 @@
-mod algo;
+mod nanoid;
 mod error;
 
-pub use algo::generate;
+pub use nanoid::generate;
 use error::Error;
 use pyo3::{exceptions as exc, prelude::*};
 
 #[pyfunction]
 #[pyo3(name = "method")]
 fn pymethod(alphabet: &str, size: u32) -> PyResult<String> {
-    let result = algo::generate(alphabet, size).map_err(|e| match e {
+    let result = nanoid::generate(alphabet, size).map_err(|e| match e {
         Error::FailedToAllocate => exc::PyMemoryError::new_err(e.to_string()),
         e => exc::PyValueError::new_err(e.to_string()),
     })?;

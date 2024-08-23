@@ -24,7 +24,7 @@ pub fn generate(alphabet: impl AsRef<str>, size: u32) -> Result<String, Error> {
     };
     let step = (1.6 * mask as f32 * size as f32 / alphabet_len as f32).ceil() as usize;
 
-    let mut result = Vec::with_capacity(size as usize);
+    let mut result = String::with_capacity(size as usize);
     let mut random_bytes = vec![0; step];
     loop {
         get_random_bytes(&mut random_bytes)?;
@@ -37,7 +37,7 @@ pub fn generate(alphabet: impl AsRef<str>, size: u32) -> Result<String, Error> {
             if let Some(c) = alphabet.chars().nth(random_byte as usize) {
                 result.push(c);
                 if result.len() == size as usize {
-                    return Ok(result.into_iter().collect());
+                    return Ok(result);
                 }
             }
         }

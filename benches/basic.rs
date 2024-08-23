@@ -8,6 +8,6 @@ fn basic<const N: usize>(b: divan::Bencher) {
 
     b.with_inputs(|| (chars, N as u32))
         .bench_refs(|(chars, size)| {
-            nanoid::generate(chars, *size).ok();
+            pynanoid::generate(chars, *size).ok();
         });
 }

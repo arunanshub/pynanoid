@@ -1,4 +1,4 @@
-from nanoid.algorithm import algorithm_generate
+from pynanoid.algorithm import algorithm_generate
 
 
 def test_generates_random_buffers():

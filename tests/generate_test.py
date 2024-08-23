@@ -3,7 +3,7 @@ from sys import maxsize
 from hypothesis import given
 from hypothesis import strategies as st
 
-from nanoid import generate
+from pynanoid import generate
 
 
 def test_has_flat_distribution():

@@ -1,7 +1,7 @@
 from sys import maxsize
 
-from nanoid import generate, non_secure_generate
-from nanoid.resources import ALPHABET
+from pynanoid import generate, non_secure_generate
+from pynanoid.resources import ALPHABET
 
 
 def test_flat_distribution():

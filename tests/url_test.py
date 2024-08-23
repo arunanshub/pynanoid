@@ -1,4 +1,4 @@
-from nanoid.resources import ALPHABET
+from pynanoid.resources import ALPHABET
 
 
 def test_has_no_duplicates():
