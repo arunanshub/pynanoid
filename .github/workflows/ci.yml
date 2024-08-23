@@ -52,7 +52,7 @@ jobs:
         run: cargo clippy --all-targets --all-features
 
       - name: Run Cargo Test 🧪
-        run: cargo nextest run --all-features --all-targets --workspace
+        run: cargo nextest run --all-features --workspace
         env:
           PROPTEST_CASES: 5000
 
