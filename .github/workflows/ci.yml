@@ -78,7 +78,7 @@ jobs:
         run: pdm run mypy .
 
       - name: Run Python Tests 🧪
-        run: pdm run pytest -n auto -d --cov=src --cov-report=lcov --cov-branch
+        run: pdm run pytest -n auto -d --cov=src/ --cov-report=html --cov-branch --benchmark-disable --benchmark-skip
 
       - name: Upload Coverage Report 📊
         uses: coverallsapp/github-action@v2.3.0
