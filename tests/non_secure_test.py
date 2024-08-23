@@ -4,7 +4,7 @@ from hypothesis import given
 from hypothesis import strategies as st
 
 from pynanoid import non_secure_generate
-from pynanoid.resources import ALPHABET
+from pynanoid.constants import ALPHABET
 
 
 @given(st.integers(min_value=1, max_value=5000))

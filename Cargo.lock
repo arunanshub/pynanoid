@@ -250,6 +250,7 @@ dependencies = [
  "getrandom",
  "proptest",
  "pyo3",
+ "rand",
  "thiserror",
 ]
 

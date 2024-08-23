@@ -21,7 +21,7 @@ distribution = true
 
 [tool.maturin]
 features = ["pyo3/extension-module"]
-module-name = "pynanoid._method"
+module-name = "pynanoid._pynanoid"
 python-source = "src"
 strip = true
 
@@ -59,6 +59,7 @@ extend-select = [
     'ANN',  # annotations
     'FA',   # future-annotations
     'PL',   # pylint
+    'PYI',
 ]
 
 [tool.ruff.lint.extend-per-file-ignores]

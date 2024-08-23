@@ -1,8 +1,9 @@
 from hypothesis import given
 from hypothesis import strategies as st
 
-from pynanoid.method import method
-from pynanoid.resources import SIZE
+from pynanoid import generate
+from pynanoid.constants import SIZE
+from pynanoid.nanoid import generate_custom
 
 
 def test_generates_random_string():
@@ -14,9 +15,9 @@ def test_generates_random_string():
             random_bytes += sequence[0 : size - i]
         return bytes(random_bytes)
 
-    assert method("abcde", 4, algorithm=rand) == "cdac"
+    assert generate_custom(rand, "abcde", 4) == "cdac"
 
 
 @given(st.text(min_size=1), st.integers(min_value=1, max_value=5000))
 def test_same_size(alphabet: str, size: int):
-    assert len(method(alphabet, size)) == size
+    assert len(generate(alphabet, size)) == size

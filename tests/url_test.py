@@ -1,4 +1,4 @@
-from pynanoid.resources import ALPHABET
+from pynanoid.constants import ALPHABET
 
 
 def test_has_no_duplicates():
