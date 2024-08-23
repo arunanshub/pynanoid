@@ -1,5 +1,6 @@
 use crate::error::Error;
 
+#[inline(always)]
 fn get_random_bytes(buffer: &mut [u8]) -> Result<(), Error> {
     getrandom::getrandom(buffer).map_err(|_| Error::FailedToAllocate)?;
     Ok(())
@@ -13,14 +14,15 @@ pub fn generate(alphabet: impl AsRef<str>, size: u32) -> Result<String, Error> {
     if size == 0 {
         return Err(Error::ZeroSize);
     }
+    let alphabet_len = alphabet.chars().count();
 
-    let mask = if alphabet.len() <= 1 {
+    let mask = if alphabet_len <= 1 {
         1
     } else {
-        let x = (alphabet.len() as f32 - 1.0).ln() / 2.0f32.ln();
+        let x = (alphabet_len as f32 - 1.0).ln() / 2.0f32.ln();
         (2 << x as u32) - 1
     };
-    let step = (1.6 * mask as f32 * size as f32 / alphabet.len() as f32).ceil() as usize;
+    let step = (1.6 * mask as f32 * size as f32 / alphabet_len as f32).ceil() as usize;
 
     let mut result = Vec::with_capacity(size as usize);
     let mut random_bytes = vec![0; step];
@@ -29,7 +31,7 @@ pub fn generate(alphabet: impl AsRef<str>, size: u32) -> Result<String, Error> {
 
         for each in random_bytes.iter() {
             let random_byte = each & mask;
-            if (random_byte as usize) >= alphabet.len() {
+            if (random_byte as usize) >= alphabet_len {
                 continue;
             }
             if let Some(c) = alphabet.chars().nth(random_byte as usize) {
@@ -67,7 +69,7 @@ mod tests {
 
     proptest! {
         #[test]
-        fn test_closure(alphabet in ".+", size in 1..1000u32) {
+        fn test_closure(alphabet in ".+", size in 1..5000u32) {
             let result = generate(&alphabet, size).unwrap();
             assert_eq!(result.chars().count(), size as usize);
         }
