@@ -40,10 +40,10 @@ def non_secure_generate(alphabet: str = ALPHABET, size: int = SIZE) -> str:
     Returns:
         A NanoID of `size` length.
     """
-    if alphabet == "":  # pragma: no cover
-        raise ValueError("Alphabet cannot be empty")
-    if size < 1:  # pragma: no cover
-        raise ValueError("Size cannot be less than 1")
+    if alphabet == "":
+        raise ValueError("alphabet cannot be empty")
+    if size < 1:
+        raise ValueError("size cannot be less than 1")
 
     alphabet_len = len(alphabet)
 
@@ -71,10 +71,10 @@ def generate_custom(
     Returns:
         A NanoID of `size` length.
     """
-    if alphabet == "":  # pragma: no cover
-        raise ValueError("Alphabet cannot be empty")
-    if size < 1:  # pragma: no cover
-        raise ValueError("Size cannot be less than 1")
+    if alphabet == "":
+        raise ValueError("alphabet cannot be empty")
+    if size < 1:
+        raise ValueError("size cannot be less than 1")
 
     alphabet_len = len(alphabet)
 
