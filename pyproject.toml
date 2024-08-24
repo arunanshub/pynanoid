@@ -26,7 +26,12 @@ python-source = "src"
 strip = true
 
 [tool.pdm.dev-dependencies]
-dev = ["ruff>=0.6.1", "mypy>=1.11.1", "pip>=24.2"]
+dev = [
+    "ruff>=0.6.1",
+    "mypy>=1.11.1",
+    "pip>=24.2",
+    "platformdirs>=4.2.2",
+]
 test = [
     "pytest>=8.3.2",
     "pytest-cov>=5.0.0",
@@ -77,6 +82,15 @@ extend-select = [
     'PLR2004', # pylint: allow using magic values in tests/
 ]
 
+# NOTE: we currently use cibuildwheel to build wheels in python. A more
+# permanent solution would be to use maturin-action. However that requires
+# more setup.
 [tool.cibuildwheel]
-before-all = "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"
+skip = ["*-musllinux_i686"]
+
+[tool.cibuildwheel.windows]
+before-all = "rustup target add i686-pc-windows-msvc"
+
+[tool.cibuildwheel.linux]
+before-all = "curl -sSf https://sh.rustup.rs | sh -s -- -y"
 environment = { PATH = "$PATH:$HOME/.cargo/bin" }

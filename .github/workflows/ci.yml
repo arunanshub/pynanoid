@@ -95,7 +95,7 @@ jobs:
       - name: Upload wheel artifacts 🫖
         uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          name: cibw-wheels-${{ matrix.os }}-py${{ matrix.python-version }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
   finish-coverage:
@@ -104,7 +104,7 @@ jobs:
 
     steps:
       - name: Finish Coverage Report
-        uses: coverallsapp/github-action@643bc377ffa44ace6394b2b5d0d3950076de9f63 # v2.3.0
+        uses: coverallsapp/github-action@v2.3.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true
