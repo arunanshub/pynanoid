@@ -12,6 +12,10 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build:
     strategy:
@@ -69,8 +73,22 @@ jobs:
           cache: true
           python-version: ${{ matrix.python-version }}
 
-      - name: Install Python Dependencies 📦
-        run: pdm install
+      - name: Setup uv 🌞
+        id: setup-uv
+        run: |
+          pipx install uv
+          printf "cache-dir=%s\n" $(uv cache dir) >> $GITHUB_OUTPUT
+
+      - name: Setup uv cache 🌞
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.setup-uv.outputs.cache-dir }}
+          key: uv-cache-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/pdm.lock') }}
+
+      - name: Install Python Dependencies (using uv) 📦
+        run: |
+          pdm export > requirements.txt
+          uv pip install -r requirements.txt --editable .
 
       - name: Check Python Formatting 🖌️
         run: pdm run ruff check .
