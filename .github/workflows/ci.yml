@@ -77,7 +77,7 @@ jobs:
         id: setup-uv
         run: |
           pipx install uv
-          printf "cache-dir=%s\n" $(uv cache dir) >> $GITHUB_OUTPUT
+          printf "cache-dir=%s\n" "$(uv cache dir)" >> $GITHUB_OUTPUT
 
       - name: Setup uv cache 🌞
         uses: actions/cache@v4
