@@ -89,8 +89,13 @@ jobs:
           parallel: true
           flag-name: run-${{ matrix.os }}-python-${{ matrix.python-version }}
 
+      - name: Install uv installer 🌞
+        run: pipx install uv
+
       - name: Build wheels 🛞
         uses: pypa/cibuildwheel@v2.20.0
+        env:
+          CIBW_BUILD_FRONTEND: build[uv]
 
       - name: Upload wheel artifacts 🫖
         uses: actions/upload-artifact@v4
