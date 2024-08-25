@@ -25,6 +25,8 @@ Welcome to PyNanoID's documentation
    :alt: PyPI - Version
 .. image:: https://img.shields.io/coverallsCoverage/github/arunanshub/pynanoid
    :alt: Coveralls code coverage
+.. image:: https://github.com/arunanshub/pynanoid/actions/workflows/ci.yml/badge.svg
+   :target: https://github.com/arunanshub/pynanoid/actions/workflows/ci.yml
 
 A tiny, secure, URL-friendly, unique string ID generator for Python, written in Rust.
 

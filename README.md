@@ -5,6 +5,7 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pynanoid)](https://pypi.org/project/pynanoid)
 ![PyPI - Version](https://img.shields.io/pypi/v/pynanoid?color=green)
 ![Coveralls code coverage](https://img.shields.io/coverallsCoverage/github/arunanshub/pynanoid)
+[![CI](https://github.com/arunanshub/pynanoid/actions/workflows/ci.yml/badge.svg)](https://github.com/arunanshub/pynanoid/actions/workflows/ci.yml)
 
 A tiny, secure, URL-friendly, unique string ID generator for Python, written in
 Rust.
@@ -90,7 +91,7 @@ print(non_secure_generate())
 ![PyNanoID Benchmarks](./assets/benchmark.svg)
 
 We benchmark using
-[pytest-benchmark](https://pytest-benchmark.readthedocs.io/en/latest/).  You can
+[pytest-benchmark](https://pytest-benchmark.readthedocs.io/en/latest/). You can
 find the benchmark script in the `tests/` directory.
 
 You can run the benchmarks using the following command:
