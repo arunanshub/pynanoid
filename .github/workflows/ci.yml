@@ -73,7 +73,7 @@ jobs:
           cache: true
           python-version: ${{ matrix.python-version }}
 
-      - name: Setup uv 🌞
+      - name: Install uv 🌞
         id: setup-uv
         run: |
           pipx install uv
@@ -106,9 +106,6 @@ jobs:
           file: "./coverage.lcov"
           parallel: true
           flag-name: run-${{ matrix.os }}-python-${{ matrix.python-version }}
-
-      - name: Install uv installer 🌞
-        run: pipx install uv
 
       - name: Build wheels 🛞
         uses: pypa/cibuildwheel@v2.20.0
