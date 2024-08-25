@@ -17,9 +17,9 @@ defaults:
     shell: bash
 
 jobs:
-  build:
+  test:
+    name: Test on ${{ matrix.os }} with Python ${{ matrix.python-version }}
     strategy:
-      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: ["3.9", "3.10", "3.11", "3.12"]
@@ -57,7 +57,7 @@ jobs:
         run: cargo clippy --all-targets --all-features
 
       - name: Run Cargo Test 🧪
-        run: cargo nextest run --all-features --workspace
+        run: cargo nextest run --all-features --workspace --release
         env:
           PROPTEST_CASES: 5000
 
@@ -107,6 +107,31 @@ jobs:
           parallel: true
           flag-name: run-${{ matrix.os }}-python-${{ matrix.python-version }}
 
+  build-wheels:
+    name: Build Wheels on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repository 👁️
+        uses: actions/checkout@v4
+
+      - name: Install mold linker 🔗
+        if: ${{ matrix.os != 'windows-latest' }}
+        uses: rui314/setup-mold@v1
+
+      - name: Install Rust 🦀
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Setup Rust Cache 🗄️
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install uv
+        run: pipx install uv
+
       - name: Build wheels 🛞
         uses: pypa/cibuildwheel@v2.20.0
         env:
@@ -115,12 +140,13 @@ jobs:
       - name: Upload wheel artifacts 🫖
         uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-py${{ matrix.python-version }}-${{ strategy.job-index }}
+          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
           path: |
             ./wheelhouse/*.whl
 
   finish-coverage:
-    needs: [build]
+    name: Finish Coverage Report
+    needs: [test]
     runs-on: ubuntu-latest
 
     steps:
