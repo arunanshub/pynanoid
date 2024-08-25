@@ -85,7 +85,7 @@ jobs:
 
       - name: Install Python Dependencies (using UV) 📦
         run: |
-          pdm export -f requirements.txt
+          pdm export > requirements.txt
           uv pip install -r requirements.txt --editable .
 
       - name: Check Python Formatting 🖌️
