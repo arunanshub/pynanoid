@@ -2,6 +2,21 @@
 name = "pynanoid"
 version = "0.1.0"
 edition = "2021"
+license-file = "LICENSE"
+readme = "README.md"
+# only the listed files are included in the source distribution (sdist)
+include = [
+    "/pyproject.toml",
+    "/README.md",
+    "/LICENSE",
+    "/src",
+    "/rust",
+    "/benches",
+    "!__pycache__",
+    "!tests/.hypothesis",
+    "!tests/.pytest_cache",
+    "!*.so",
+]
 
 [dependencies]
 getrandom = "0.2.15"

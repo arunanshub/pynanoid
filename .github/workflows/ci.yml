@@ -12,10 +12,14 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
-  build:
+  test:
+    name: Test on ${{ matrix.os }} with Python ${{ matrix.python-version }}
     strategy:
-      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: ["3.9", "3.10", "3.11", "3.12"]
@@ -53,7 +57,7 @@ jobs:
         run: cargo clippy --all-targets --all-features
 
       - name: Run Cargo Test 🧪
-        run: cargo nextest run --all-features --workspace
+        run: cargo nextest run --all-features --workspace --release
         env:
           PROPTEST_CASES: 5000
 
@@ -69,8 +73,22 @@ jobs:
           cache: true
           python-version: ${{ matrix.python-version }}
 
-      - name: Install Python Dependencies 📦
-        run: pdm install
+      - name: Install uv 🌞
+        id: setup-uv
+        run: |
+          pipx install uv
+          printf "cache-dir=%s\n" "$(uv cache dir)" >> $GITHUB_OUTPUT
+
+      - name: Setup uv cache 🌞
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.setup-uv.outputs.cache-dir }}
+          key: uv-cache-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/pdm.lock') }}
+
+      - name: Install Python Dependencies (using uv) 📦
+        run: |
+          pdm export > requirements.txt
+          uv pip install -r requirements.txt --editable .
 
       - name: Check Python Formatting 🖌️
         run: pdm run ruff check .
@@ -89,7 +107,29 @@ jobs:
           parallel: true
           flag-name: run-${{ matrix.os }}-python-${{ matrix.python-version }}
 
-      - name: Install uv installer 🌞
+  build-wheels:
+    name: Build Wheels on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repository 👁️
+        uses: actions/checkout@v4
+
+      - name: Install mold linker 🔗
+        if: ${{ matrix.os != 'windows-latest' }}
+        uses: rui314/setup-mold@v1
+
+      - name: Install Rust 🦀
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Setup Rust Cache 🗄️
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install uv
         run: pipx install uv
 
       - name: Build wheels 🛞
@@ -100,11 +140,13 @@ jobs:
       - name: Upload wheel artifacts 🫖
         uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-py${{ matrix.python-version }}-${{ strategy.job-index }}
-          path: ./wheelhouse/*.whl
+          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          path: |
+            ./wheelhouse/*.whl
 
   finish-coverage:
-    needs: [build]
+    name: Finish Coverage Report
+    needs: [test]
     runs-on: ubuntu-latest
 
     steps:
