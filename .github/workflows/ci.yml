@@ -62,6 +62,20 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Install uv installer 🌞
+        run: pipx install uv
+
+      - name: Get uv cache directory
+        id: uv-cache
+        run: |
+          echo "cache-dir=$(uv cache dir)\n" >> $GITHUB_OUTPUT
+
+      - name: Setup uv Cache
+        uses: actions/cache@v4
+        with:
+          key: uv-${{ runner.os }}-${{ matrix.python-version }}-pdm
+          path: ${{ steps.uv-cache.outputs.cache-dir }}
+
       - name: Setup PDM 📦
         uses: pdm-project/setup-pdm@v4.1
         id: setup-pdm
@@ -69,8 +83,10 @@ jobs:
           cache: true
           python-version: ${{ matrix.python-version }}
 
-      - name: Install Python Dependencies 📦
-        run: pdm install
+      - name: Install Python Dependencies (using UV) 📦
+        run: |
+          pdm export -f requirements.txt
+          uv pip install -r requirements.txt --editable .
 
       - name: Check Python Formatting 🖌️
         run: pdm run ruff check .
@@ -88,9 +104,6 @@ jobs:
           file: "./coverage.lcov"
           parallel: true
           flag-name: run-${{ matrix.os }}-python-${{ matrix.python-version }}
-
-      - name: Install uv installer 🌞
-        run: pipx install uv
 
       - name: Build wheels 🛞
         uses: pypa/cibuildwheel@v2.20.0
