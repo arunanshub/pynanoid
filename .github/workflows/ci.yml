@@ -115,11 +115,16 @@ jobs:
         env:
           CIBW_BUILD_FRONTEND: build[uv]
 
+      - name: Build sdist 📦
+        run: pdm build --no-wheel
+
       - name: Upload wheel artifacts 🫖
         uses: actions/upload-artifact@v4
         with:
           name: cibw-wheels-${{ matrix.os }}-py${{ matrix.python-version }}-${{ strategy.job-index }}
-          path: ./wheelhouse/*.whl
+          path: |
+            ./wheelhouse/*.whl
+            dist/*.tar.gz
 
   finish-coverage:
     needs: [build]
