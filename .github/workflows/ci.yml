@@ -12,6 +12,10 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build:
     strategy:
@@ -68,7 +72,7 @@ jobs:
       - name: Get uv cache directory
         id: uv-cache
         run: |
-          echo "cache-dir=$(uv cache dir)\n" >> $GITHUB_OUTPUT
+          echo "cache-dir=$(uv cache dir)" >> $GITHUB_OUTPUT
 
       - name: Setup uv Cache
         uses: actions/cache@v4
