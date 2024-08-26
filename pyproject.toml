@@ -19,12 +19,6 @@ repository = "https://github.com/arunanshub/pynanoid"
 [tool.pdm]
 distribution = true
 
-[tool.maturin]
-features = ["pyo3/extension-module"]
-module-name = "pynanoid._pynanoid"
-python-source = "src"
-strip = true
-
 [tool.pdm.dev-dependencies]
 dev = ["ruff>=0.6.1", "mypy>=1.11.1", "pip>=24.2"]
 test = [
@@ -40,6 +34,12 @@ docs = [
     "sphinxext-opengraph>=0.9.1",
     "sphinx-copybutton>=0.5.2",
 ]
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+module-name = "pynanoid._pynanoid"
+python-source = "src"
+strip = true
 
 [tool.ruff]
 line-length = 80
