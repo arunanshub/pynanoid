@@ -4,6 +4,9 @@ version = "0.1.0"
 edition = "2021"
 license-file = "LICENSE"
 readme = "README.md"
+repository = "https://github.com/arunanshub/pynanoid"
+categories = ["algorithms"]
+description = "A tiny, secure, URL-friendly, unique string ID generator."
 # only the listed files are included in the source distribution (sdist)
 include = [
     "/pyproject.toml",
