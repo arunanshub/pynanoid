@@ -4,13 +4,30 @@ build-backend = "maturin"
 
 [project]
 name = "pynanoid"
-version = "0.1.0"
 description = "A tiny, secure, URL-friendly, unique string ID generator for Python written in Rust"
 authors = [{ name = "Arunanshu Biswas", email = "mydellpc07@gmail.com" }]
 dependencies = []
 requires-python = ">=3.9"
 readme = "README.md"
 license = { file = "LICENSE" }
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: MIT License",
+    "Typing :: Typed",
+]
+# the version is derived from Cargo.toml by maturin
+dynamic = ["version"]
 
 [project.urls]
 repository = "https://github.com/arunanshub/pynanoid"
@@ -64,7 +81,7 @@ extend-select = [
     'ANN',  # annotations
     'FA',   # future-annotations
     'PL',   # pylint
-    'PYI',
+    'PYI',  # python stubs
 ]
 
 [tool.ruff.lint.extend-per-file-ignores]

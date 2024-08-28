@@ -1,6 +1,5 @@
-use rand::Rng;
-
 use crate::error::Error;
+use rand::Rng;
 
 #[inline(always)]
 fn get_random_bytes(buffer: &mut [u8]) -> Result<(), Error> {
