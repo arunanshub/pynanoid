@@ -3,8 +3,8 @@
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![PDM](https://img.shields.io/endpoint?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fpdm-project%2F.github%2Fbadge.json)](https://github.com/arunanshub/pynanoid)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pynanoid)](https://pypi.org/project/pynanoid)
-![PyPI - Version](https://img.shields.io/pypi/v/pynanoid?color=green)
-![Coveralls code coverage](https://img.shields.io/coverallsCoverage/github/arunanshub/pynanoid)
+[![PyPI - Version](https://img.shields.io/pypi/v/pynanoid?color=green)](https://pypi.org/project/pynanoid)
+[![Coverage Status](https://img.shields.io/coverallsCoverage/github/arunanshub/pynanoid)](https://coveralls.io/github/arunanshub/pynanoid?branch=master)
 [![CI](https://github.com/arunanshub/pynanoid/actions/workflows/ci.yml/badge.svg)](https://github.com/arunanshub/pynanoid/actions/workflows/ci.yml)
 
 A tiny, secure, URL-friendly, unique string ID generator for Python, written in
@@ -17,8 +17,8 @@ Rust.
 
 ## Installation
 
-```shell-session
-$ pip install pynanoid
+```bash
+pip install pynanoid
 ```
 
 ## Usage
@@ -27,6 +27,7 @@ $ pip install pynanoid
 from pynanoid import generate
 
 print(generate())
+# SxuPyeUFRnoWnNlwtLBvT
 ```
 
 Symbols `-,.()` are not encoded in the URL. If used at the end of a link they
@@ -46,6 +47,7 @@ you can pass the length as an argument.
 from pynanoid import generate
 
 print(generate(size=10))
+# WtYW30_vPi
 ```
 
 Don’t forget to check the safety of your ID length in ID [collision probability
@@ -60,6 +62,7 @@ the first argument and the size as the second argument.
 from pynanoid import generate
 
 print(generate("1234567890abcdef", 10))
+# bced90bd56
 ```
 
 Non-secure generator is also available.
@@ -68,6 +71,7 @@ Non-secure generator is also available.
 from pynanoid import non_secure_generate
 
 print(non_secure_generate())
+# JlJp1Od7zjlcrfIttk0JB
 ```
 
 > [!WARNING]
@@ -82,8 +86,8 @@ If you want to use the pure-Python generator, you can use functions provided in
 ```python
 from pynanoid.nanoid import generate, non_secure_generate
 
-print(generate())
-print(non_secure_generate())
+print(generate())  # wBM-LJLoliqnGTOf38Qf4
+print(non_secure_generate())  # ekN1GQBxPNjKM3XFGVO8q
 ```
 
 ## Benchmarks
@@ -96,8 +100,8 @@ find the benchmark script in the `tests/` directory.
 
 You can run the benchmarks using the following command:
 
-```shell-session
-$ pytest tests/benchmark.py --benchmark-histogram=assets/benchmark.svg
+```sh
+pytest tests/benchmark.py --benchmark-histogram=assets/benchmark.svg
 ```
 
 ## Credits
