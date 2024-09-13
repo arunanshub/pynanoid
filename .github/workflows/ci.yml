@@ -133,7 +133,7 @@ jobs:
         run: pipx install uv
 
       - name: Build wheels 🛞
-        uses: pypa/cibuildwheel@v2.20.0
+        uses: pypa/cibuildwheel@v2.21.0
         env:
           CIBW_BUILD_FRONTEND: build[uv]
 
