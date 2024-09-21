@@ -162,6 +162,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Run sccache-cache 🗄️
+        uses: mozilla-actions/sccache-action@v0.0.5
+
       - name: Build sdist
         run: pipx run build --sdist
 
