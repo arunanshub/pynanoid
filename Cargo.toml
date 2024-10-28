@@ -25,7 +25,7 @@ include = [
 getrandom = "0.2.15"
 pyo3 = { version = "0.22.3", features = ["abi3-py39"] }
 rand = "0.8.5"
-thiserror = "1.0.64"
+thiserror = "1.0.65"
 
 [dev-dependencies]
 divan = "0.1.14"
