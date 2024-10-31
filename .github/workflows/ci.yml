@@ -1,13 +1,12 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - master
-    tags:
-      - "v*.*.*"
-  pull_request:
   workflow_dispatch:
+  push:
+    branches: [master]
+    tags: ["v*.*.*"]
+  pull_request:
+    branches: [master]
 
 permissions:
   contents: read
@@ -21,15 +20,19 @@ env:
   SCCACHE_GHA_ENABLED: "true"
   RUSTC_WRAPPER: "sccache"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
+
 jobs:
   test:
     name: Test on ${{ matrix.os }} with Python ${{ matrix.python-version }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
-    runs-on: ${{ matrix.os}}
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout repository 👁️
@@ -112,6 +115,7 @@ jobs:
         with:
           files: coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
 
   build-wheels:
     name: Build Wheels on ${{ matrix.os }}
