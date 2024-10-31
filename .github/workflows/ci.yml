@@ -1,13 +1,12 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - master
-    tags:
-      - "v*.*.*"
-  pull_request:
   workflow_dispatch:
+  push:
+    branches: [master]
+    tags: ["v*.*.*"]
+  pull_request:
+    branches: [master]
 
 permissions:
   contents: read
@@ -21,15 +20,19 @@ env:
   SCCACHE_GHA_ENABLED: "true"
   RUSTC_WRAPPER: "sccache"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
+
 jobs:
   test:
     name: Test on ${{ matrix.os }} with Python ${{ matrix.python-version }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
-    runs-on: ${{ matrix.os}}
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout repository 👁️
@@ -105,15 +108,14 @@ jobs:
         run: pdm run mypy .
 
       - name: Run Python Tests 🧪
-        run: pdm run pytest -n auto -d --cov=src/ --cov-report=lcov --cov-branch --benchmark-disable --benchmark-skip
+        run: pdm run pytest -n auto -d --cov=src/ --cov-report=xml --cov-branch --benchmark-disable --benchmark-skip
 
-      - name: Upload Coverage Report 📊
-        uses: coverallsapp/github-action@v2.3.4
+      - name: Upload Coverage Report to Codecov
+        uses: codecov/codecov-action@v4.6.0
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          file: "./coverage.lcov"
-          parallel: true
-          flag-name: run-${{ matrix.os }}-python-${{ matrix.python-version }}
+          files: coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
 
   build-wheels:
     name: Build Wheels on ${{ matrix.os }}
@@ -172,18 +174,6 @@ jobs:
         with:
           name: cibw-sdist
           path: dist/*.tar.gz
-
-  finish-coverage:
-    name: Finish Coverage Report
-    needs: [test]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Finish Coverage Report
-        uses: coverallsapp/github-action@v2.3.4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
 
   publish:
     name: Publish to PyPI

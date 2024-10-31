@@ -4,7 +4,7 @@
 [![PDM](https://img.shields.io/endpoint?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fpdm-project%2F.github%2Fbadge.json)](https://github.com/arunanshub/pynanoid)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pynanoid)](https://pypi.org/project/pynanoid)
 [![PyPI - Version](https://img.shields.io/pypi/v/pynanoid?color=green)](https://pypi.org/project/pynanoid)
-[![Coverage Status](https://img.shields.io/coverallsCoverage/github/arunanshub/pynanoid)](https://coveralls.io/github/arunanshub/pynanoid?branch=master)
+[![Coverage Status](https://img.shields.io/codecov/c/github/arunanshub/pynanoid?logo=codecov)](https://app.codecov.io/gh/arunanshub/pynanoid)
 [![CI](https://github.com/arunanshub/pynanoid/actions/workflows/ci.yml/badge.svg)](https://github.com/arunanshub/pynanoid/actions/workflows/ci.yml)
 
 A tiny, secure, URL-friendly, unique string ID generator for Python, written in
