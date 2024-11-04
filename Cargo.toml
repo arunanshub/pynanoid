@@ -28,7 +28,7 @@ rand = "0.8.5"
 thiserror = "1.0.65"
 
 [dev-dependencies]
-divan = "0.1.14"
+divan = "0.1.15"
 proptest = "1.5.0"
 
 [lib]
