@@ -3,7 +3,9 @@ use rand::Rng;
 
 #[inline(always)]
 fn get_random_bytes(buffer: &mut [u8]) -> Result<(), Error> {
-    getrandom::getrandom(buffer).map_err(|_| Error::FailedToAllocate)?;
+    rand::thread_rng()
+        .try_fill(buffer)
+        .map_err(|_| Error::FailedToAllocate)?;
     Ok(())
 }
 

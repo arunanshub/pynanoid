@@ -101,7 +101,7 @@ find the benchmark script in the `tests/` directory.
 You can run the benchmarks using the following command:
 
 ```sh
-pytest tests/benchmark.py --benchmark-histogram=assets/benchmark.svg
+pytest tests/benchmark.py --benchmark-histogram=assets/benchmark
 ```
 
 ## Credits

@@ -247,7 +247,6 @@ name = "pynanoid"
 version = "0.1.0"
 dependencies = [
  "divan",
- "getrandom",
  "proptest",
  "pyo3",
  "rand",
