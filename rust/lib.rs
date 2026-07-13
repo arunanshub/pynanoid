@@ -1,7 +1,6 @@
 mod error;
 mod nanoid;
 
-use error::Error;
 pub use nanoid::{generate, non_secure_generate};
 use pyo3::{exceptions as exc, prelude::*};
 
@@ -23,11 +22,7 @@ use pyo3::{exceptions as exc, prelude::*};
     size = 21,
 ))]
 fn pygenerate(alphabet: &str, size: u32) -> PyResult<String> {
-    let result = generate(alphabet, size).map_err(|e| match e {
-        Error::FailedToAllocate => exc::PyMemoryError::new_err(e.to_string()),
-        e => exc::PyValueError::new_err(e.to_string()),
-    })?;
-    Ok(result)
+    generate(alphabet, size).map_err(|e| exc::PyValueError::new_err(e.to_string()))
 }
 
 /// Generate a NanoID using non-secure algorithms.
@@ -51,9 +46,7 @@ fn pygenerate(alphabet: &str, size: u32) -> PyResult<String> {
     size = 21,
 ))]
 fn py_non_secure_generate(alphabet: &str, size: u32) -> PyResult<String> {
-    let result = non_secure_generate(alphabet, size)
-        .map_err(|e| exc::PyValueError::new_err(e.to_string()))?;
-    Ok(result)
+    non_secure_generate(alphabet, size).map_err(|e| exc::PyValueError::new_err(e.to_string()))
 }
 
 #[pymodule]

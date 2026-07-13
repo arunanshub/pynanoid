@@ -1,13 +1,5 @@
 use crate::error::Error;
-use rand::Rng;
-
-#[inline(always)]
-fn get_random_bytes(buffer: &mut [u8]) -> Result<(), Error> {
-    rand::thread_rng()
-        .try_fill(buffer)
-        .map_err(|_| Error::FailedToAllocate)?;
-    Ok(())
-}
+use rand::{Rng, RngCore};
 
 pub fn generate(alphabet: impl AsRef<str>, size: u32) -> Result<String, Error> {
     let alphabet = alphabet.as_ref();
@@ -17,31 +9,38 @@ pub fn generate(alphabet: impl AsRef<str>, size: u32) -> Result<String, Error> {
     if size == 0 {
         return Err(Error::ZeroSize);
     }
-    let alphabet_len = alphabet.chars().count();
+
+    // Collect the alphabet once so that symbol lookup is an O(1) index instead
+    // of walking the string with `chars().nth()` on every generated symbol.
+    let alphabet: Vec<char> = alphabet.chars().collect();
+    let alphabet_len = alphabet.len();
 
     let mask = if alphabet_len <= 1 {
         1
     } else {
-        let x = (alphabet_len as f32 - 1.0).ln() / 2.0f32.ln();
-        (2 << x as u32) - 1
+        let bits = ((alphabet_len - 1) as f64).ln() / 2.0f64.ln();
+        (2usize << bits as usize) - 1
     };
-    let step = (1.6 * mask as f32 * size as f32 / alphabet_len as f32).ceil() as usize;
+    let step = (1.6 * mask as f64 * size as f64 / alphabet_len as f64).ceil() as usize;
 
-    let mut result = Vec::with_capacity(size as usize);
-    let mut random_bytes = vec![0; step];
+    let mut rng = rand::rng();
+    let mut result = String::with_capacity(size as usize);
+    // `String::len()` counts bytes, not characters, so track the symbol count
+    // separately to stay correct for multi-byte alphabets.
+    let mut count = 0usize;
+    let mut random_bytes = vec![0u8; step];
     loop {
-        get_random_bytes(&mut random_bytes)?;
+        rng.fill_bytes(&mut random_bytes);
 
-        for each in random_bytes.iter() {
-            let random_byte = each & mask;
-            if (random_byte as usize) >= alphabet_len {
+        for &byte in random_bytes.iter() {
+            let index = (byte as usize) & mask;
+            if index >= alphabet_len {
                 continue;
             }
-            if let Some(c) = alphabet.chars().nth(random_byte as usize) {
-                result.push(c);
-                if result.len() == size as usize {
-                    return Ok(result.into_iter().collect());
-                }
+            result.push(alphabet[index]);
+            count += 1;
+            if count == size as usize {
+                return Ok(result);
             }
         }
     }
@@ -55,17 +54,18 @@ pub fn non_secure_generate(alphabet: impl AsRef<str>, size: u32) -> Result<Strin
     if size == 0 {
         return Err(Error::ZeroSize);
     }
-    let alphabet_len = alphabet.chars().count();
-    let mut rng = rand::thread_rng();
 
-    let mut result = Vec::with_capacity(size as usize);
+    let alphabet: Vec<char> = alphabet.chars().collect();
+    let alphabet_len = alphabet.len();
+    let mut rng = rand::rng();
+
+    let mut result = String::with_capacity(size as usize);
     for _ in 0..size {
-        let x = (rng.gen::<f32>() * alphabet_len as f32) as u32;
-        if let Some(c) = alphabet.chars().nth(x as usize) {
-            result.push(c);
-        }
+        // `random::<f32>()` is in [0, 1), so the index is always < alphabet_len.
+        let index = (rng.random::<f32>() * alphabet_len as f32) as usize;
+        result.push(alphabet[index.min(alphabet_len - 1)]);
     }
-    Ok(result.into_iter().collect())
+    Ok(result)
 }
 
 #[cfg(test)]
@@ -90,10 +90,29 @@ mod tests {
         let result = generate("\0", 1).unwrap();
         assert_eq!(result.chars().count(), 1);
     }
+
     #[test]
     fn test_null_char_non_secure() {
         let result = non_secure_generate("\0", 1).unwrap();
         assert_eq!(result.chars().count(), 1);
+    }
+
+    #[test]
+    fn test_empty_alphabet_errors() {
+        assert!(matches!(generate("", 1), Err(Error::EmptyAlphabet)));
+        assert!(matches!(
+            non_secure_generate("", 1),
+            Err(Error::EmptyAlphabet)
+        ));
+    }
+
+    #[test]
+    fn test_zero_size_errors() {
+        assert!(matches!(generate("abc", 0), Err(Error::ZeroSize)));
+        assert!(matches!(
+            non_secure_generate("abc", 0),
+            Err(Error::ZeroSize)
+        ));
     }
 
     proptest! {

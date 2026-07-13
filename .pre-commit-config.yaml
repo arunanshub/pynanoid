@@ -1,24 +1,40 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: check-yaml
+      - id: check-toml
       - id: end-of-file-fixer
       - id: trailing-whitespace
+      - id: check-merge-conflict
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.8.0
+    rev: v0.15.21
     hooks:
-      - id: ruff
+      - id: ruff-check
         args: [--fix]
       - id: ruff-format
 
   - repo: local
     hooks:
       - id: mypy
-        name: Mypy (in Venv)
-        entry: mypy
-        language: python
+        name: mypy
+        entry: uv run mypy .
+        language: system
         types: [python]
-        exclude: ^tests/|^docs/
+        exclude: ^(tests|docs)/
+        pass_filenames: false
         require_serial: true
+
+      - id: cargo-fmt
+        name: cargo fmt
+        entry: cargo fmt --
+        language: system
+        types: [rust]
+
+      - id: cargo-clippy
+        name: cargo clippy
+        entry: cargo clippy --all-targets --all-features -- -D warnings
+        language: system
+        types: [rust]
+        pass_filenames: false

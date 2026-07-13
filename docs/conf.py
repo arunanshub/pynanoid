@@ -6,14 +6,15 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+import os
 import sys
 
-sys.path.insert(0, "..")
+sys.path.insert(0, os.path.abspath("../src"))
 
 import pynanoid  # noqa: F401
 
 project = "PyNanoID"
-copyright = "2024"  # noqa: A001
+copyright = "2024–2026, Arunanshu Biswas"  # noqa: A001
 author = "Arunanshu Biswas"
 
 # -- General configuration ---------------------------------------------------
@@ -29,7 +30,6 @@ extensions = [
     "sphinx_copybutton",
 ]
 
-templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 language = "en"
