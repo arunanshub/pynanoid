@@ -136,7 +136,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        # macos-latest is Apple Silicon (arm64); cibuildwheel cross-builds the
+        # x86_64 wheel from it too (see [tool.cibuildwheel.macos]).
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     runs-on: ${{ matrix.os }}
     env:

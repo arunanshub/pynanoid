@@ -125,3 +125,10 @@ before-all = "rustup target add i686-pc-windows-msvc"
 [tool.cibuildwheel.linux]
 before-all = "curl -sSf https://sh.rustup.rs | sh -s -- -y"
 environment = { PATH = "$PATH:$HOME/.cargo/bin" }
+
+# Build both architectures from a single (arm64) macos-latest runner, since the
+# Intel macos-13 runner has been retired. cibuildwheel cross-compiles the
+# x86_64 wheel, so both Rust targets must be installed.
+[tool.cibuildwheel.macos]
+archs = ["x86_64", "arm64"]
+before-all = "rustup target add x86_64-apple-darwin aarch64-apple-darwin"
