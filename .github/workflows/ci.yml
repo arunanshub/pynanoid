@@ -173,7 +173,7 @@ jobs:
           CIBW_BUILD_FRONTEND: build[uv]
 
       - name: Upload wheel artifacts 🫖
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
@@ -192,7 +192,7 @@ jobs:
         run: uv build --sdist
 
       - name: Upload sdist artifact 🫖
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: cibw-sdist
           path: dist/*.tar.gz
@@ -207,7 +207,7 @@ jobs:
 
     steps:
       - name: Fetch wheel and sdist from artifacts 🫖
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: cibw-*
           merge-multiple: true
