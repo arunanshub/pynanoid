@@ -34,7 +34,7 @@ jobs:
       RUSTC_WRAPPER: "sccache"
     steps:
       - name: Checkout repository 👁️
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Install mold linker 🔗
         if: runner.os != 'Windows'
@@ -85,7 +85,7 @@ jobs:
       RUSTC_WRAPPER: "sccache"
     steps:
       - name: Checkout repository 👁️
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Install mold linker 🔗
         if: runner.os != 'Windows'
@@ -147,7 +147,7 @@ jobs:
       RUSTC_WRAPPER: "sccache"
     steps:
       - name: Checkout repository 👁️
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Install mold linker 🔗
         if: runner.os != 'Windows'
@@ -183,7 +183,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository 👁️
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Install uv 🌞
         uses: astral-sh/setup-uv@v8.3.2
