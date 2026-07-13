@@ -1,7 +1,7 @@
 # PyNanoID
 
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-[![PDM](https://img.shields.io/endpoint?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fpdm-project%2F.github%2Fbadge.json)](https://github.com/arunanshub/pynanoid)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pynanoid)](https://pypi.org/project/pynanoid)
 [![PyPI - Version](https://img.shields.io/pypi/v/pynanoid?color=green)](https://pypi.org/project/pynanoid)
 [![Coverage Status](https://img.shields.io/codecov/c/github/arunanshub/pynanoid?logo=codecov)](https://app.codecov.io/gh/arunanshub/pynanoid)
@@ -101,7 +101,34 @@ find the benchmark script in the `tests/` directory.
 You can run the benchmarks using the following command:
 
 ```sh
-pytest tests/benchmark.py --benchmark-histogram=assets/benchmark
+uv run pytest tests/benchmark.py --benchmark-histogram=assets/benchmark
+```
+
+## Development
+
+This project uses [uv](https://docs.astral.sh/uv/) for Python packaging and
+[maturin](https://www.maturin.rs/) to build the Rust extension. You will also
+need a [Rust toolchain](https://rustup.rs/).
+
+```sh
+# Create the virtual environment and build the extension.
+uv sync
+
+# Run the Python test suite.
+uv run pytest
+
+# Lint, format, and type-check.
+uv run ruff check .
+uv run ruff format .
+uv run mypy .
+
+# Rust checks.
+cargo test
+cargo clippy --all-targets --all-features
+cargo fmt --all
+
+# Rebuild the extension after changing Rust code.
+uv run maturin develop
 ```
 
 ## Credits

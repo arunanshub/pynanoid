@@ -15,16 +15,17 @@ Welcome to PyNanoID's documentation
 .. image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json
    :target: https://github.com/astral-sh/ruff
    :alt: Ruff
-.. image:: https://img.shields.io/endpoint?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fpdm-project%2F.github%2Fbadge.json
-   :target: https://github.com/arunanshub/pynanoid
-   :alt: PDM
+.. image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json
+   :target: https://github.com/astral-sh/uv
+   :alt: uv
 .. image:: https://img.shields.io/pypi/pyversions/pynanoid
    :target: https://pypi.org/project/pynanoid
    :alt: PyPI - Python Version
 .. image:: https://img.shields.io/pypi/v/pynanoid?color=green
    :alt: PyPI - Version
-.. image:: https://img.shields.io/coverallsCoverage/github/arunanshub/pynanoid
-   :alt: Coveralls code coverage
+.. image:: https://img.shields.io/codecov/c/github/arunanshub/pynanoid?logo=codecov
+   :target: https://app.codecov.io/gh/arunanshub/pynanoid
+   :alt: Coverage Status
 .. image:: https://github.com/arunanshub/pynanoid/actions/workflows/ci.yml/badge.svg
    :target: https://github.com/arunanshub/pynanoid/actions/workflows/ci.yml
 
