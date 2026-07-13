@@ -1,7 +1,8 @@
 [package]
 name = "pynanoid"
-version = "0.1.1"
-edition = "2021"
+version = "0.2.0"
+edition = "2024"
+rust-version = "1.85"
 license-file = "LICENSE"
 readme = "README.md"
 repository = "https://github.com/arunanshub/pynanoid"
@@ -22,13 +23,13 @@ include = [
 ]
 
 [dependencies]
-pyo3 = { version = "0.23.3", features = ["abi3-py39"] }
-rand = "0.8.5"
-thiserror = "2.0.3"
+pyo3 = { version = "0.29", features = ["abi3-py310"] }
+rand = "0.9"
+thiserror = "2.0"
 
 [dev-dependencies]
-divan = "0.1.15"
-proptest = "1.5.0"
+divan = "0.1.21"
+proptest = "1.11"
 
 [lib]
 # name = "nanoid"
