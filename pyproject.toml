@@ -132,3 +132,7 @@ environment = { PATH = "$PATH:$HOME/.cargo/bin" }
 [tool.cibuildwheel.macos]
 archs = ["x86_64", "arm64"]
 before-all = "rustup target add x86_64-apple-darwin aarch64-apple-darwin"
+# rustc's minimum macOS target (10.12) is newer than cibuildwheel's historic
+# default (10.9), which makes delocate reject the x86_64 wheel. Pin a floor
+# valid for both architectures (arm64 requires >= 11.0).
+environment = { MACOSX_DEPLOYMENT_TARGET = "11.0" }
