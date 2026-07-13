@@ -3,10 +3,10 @@
 This is provided in case the compiled version is not available.
 """
 
+from collections.abc import Callable
 from math import ceil, log
 from os import urandom
 from random import random as _random
-from typing import Callable
 
 from .constants import ALPHABET, SIZE
 

@@ -134,15 +134,10 @@ dmypy.json
 .vscode/
 caches/
 .idea/
-__pypackages__
-.pdm.toml
-.pdm-python
 temp.py
 
-# Pyannotate generated stubs
-type_info.json
-.pdm-build/
-src/pdm/models/VERSION
+# uv
+# NOTE: uv.lock is intentionally committed for reproducible dev environments.
 
 # Added by cargo
 /target
