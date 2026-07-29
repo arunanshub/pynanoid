@@ -46,7 +46,7 @@ jobs:
           components: clippy, rustfmt
 
       - name: Run sccache-cache 🗄️
-        uses: mozilla-actions/sccache-action@v0.0.10
+        uses: mozilla-actions/sccache-action@v0.0.11
 
       - name: Setup Rust cache 🗄️
         uses: Swatinem/rust-cache@v2
@@ -95,7 +95,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: Run sccache-cache 🗄️
-        uses: mozilla-actions/sccache-action@v0.0.10
+        uses: mozilla-actions/sccache-action@v0.0.11
 
       - name: Setup Rust cache 🗄️
         uses: Swatinem/rust-cache@v2
@@ -157,7 +157,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: Run sccache-cache 🗄️
-        uses: mozilla-actions/sccache-action@v0.0.10
+        uses: mozilla-actions/sccache-action@v0.0.11
 
       - name: Setup Rust cache 🗄️
         uses: Swatinem/rust-cache@v2
