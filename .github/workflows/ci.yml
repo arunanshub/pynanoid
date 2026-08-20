@@ -101,7 +101,7 @@ jobs:
         uses: Swatinem/rust-cache@v2
 
       - name: Install uv 🌞
-        uses: astral-sh/setup-uv@v9.0.0
+        uses: astral-sh/setup-uv@v10.0.1
         with:
           python-version: ${{ matrix.python-version }}
           enable-cache: true
@@ -165,7 +165,7 @@ jobs:
       # cibuildwheel's build[uv] frontend and its wheel-audit venv need uv on
       # the host (also for the Linux container build's repair step).
       - name: Install uv 🌞
-        uses: astral-sh/setup-uv@v9.0.0
+        uses: astral-sh/setup-uv@v10.0.1
 
       - name: Build wheels 🛞
         uses: pypa/cibuildwheel@v4.2.0
@@ -186,7 +186,7 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Install uv 🌞
-        uses: astral-sh/setup-uv@v9.0.0
+        uses: astral-sh/setup-uv@v10.0.1
 
       - name: Build sdist 📦
         run: uv build --sdist
