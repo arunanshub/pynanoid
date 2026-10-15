@@ -1,5 +1,5 @@
 use crate::error::Error;
-use rand::{Rng, RngCore};
+use rand::{Rng, RngExt};
 
 pub fn generate(alphabet: impl AsRef<str>, size: u32) -> Result<String, Error> {
     let alphabet = alphabet.as_ref();
